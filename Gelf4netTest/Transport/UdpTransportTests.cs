@@ -80,5 +80,21 @@ namespace Gelf4netTest.Appender
             Assert.That(result[10], Is.EqualTo(index));
             Assert.That(result[11], Is.EqualTo(chunkCount));
         }
+
+
+        [Test()]
+        public void CreateChunkedMessagePart_Always_IndexIsSmallerThanChuckCount()
+        {
+            // Arrange
+            string messageId = "A1B2C3D4";
+            int index = 1;
+            int chunkCount = 2;
+
+            // Act
+            byte[] result = new UdpTransport().CreateChunkedMessagePart(messageId, index, chunkCount);
+
+            // Assert
+            Assert.That(result[10], Is.LessThanOrEqualTo(result[11]));            
+        }
     }
 }
